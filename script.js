@@ -26,7 +26,7 @@ function generatePassword() {
     }
     passwordLength = Number(input); // convert input into a number
 
-  } while ((passwordLength < 8 || passwordLength > 128)); // if null, user clicked cancel
+  } while ((passwordLength < 8 || passwordLength > 128));
 
   // create objects for each criteria
   var lowercaseCond = {name: "lower", include: false, count: 0, id: 1};
@@ -37,10 +37,10 @@ function generatePassword() {
   do {
     // Notify the user to choose at least one criteria
     alert("\u2022 lowercase\n" + 
-    "\u2022 uppercase\n" + 
-    "\u2022 numeric\n" +
-    "\u2022 special characters\n\n" +
-    "You must choose at least one criteria to include into your password")
+          "\u2022 uppercase\n" + 
+          "\u2022 numeric\n" +
+          "\u2022 special characters\n\n" +
+          "You must choose at least one criteria to include into your password")
     // Ask user if they want password to include lowercase characters
     lowercaseCond.include = confirm("Do you want your password to include lowercase characters?");
     uppercaseCond.include = confirm("Do you want your password to include uppercase characters?");
