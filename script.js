@@ -66,6 +66,20 @@ function generatePassword() {
   } 
 
   // Set a character limit for each criteria so each are guaranteed to be met in the password
+  /*
+    For example, if password length is set to 9, and 3 out of 4 criterias were selected,
+    then criteriaLimit = 9/3 = 3. Which means that characters in a each criteria can appear
+    in the password at least 3 times. 
+
+    This becomes tricky when the password length isn't perfectly divisible by the number of selected criterias.
+    For example, if the password length is 9 and 4 out 4 criterias were selected, then the
+    criteriaLimit will be 2. However, that would mean that if the criteria limit is set when generating 
+    a password, only 8 slots will be filled out of 9. To counter this, I made a condition where if all
+    the counts in each criteria object (that are stored inside the criteriaArray) are all maxed out, then
+    the program will reset all the counts to 0. This will allow any character randomly selected to continue generate 
+    until the password length is met.
+  
+  */
   var characterLimit = Math.floor(passwordLength / criteriaArray.length);
 
   // Create arrays to store characters for special characters
@@ -73,42 +87,51 @@ function generatePassword() {
 
   // Generate the password based on the given criteria
   var newPassword = ""; // to store the newly generated password
-  var randomInt;
-  var randomCharInt;
-  var criteria;
+  var randomInt; // To store a random int
+  var randomCharInt; // To store a random int representing the ASCII code of a character
+  var criteria; // To store the numerical id of the selected criteria
   var char; // To store lowercase or uppercase generated letter
   
   while (newPassword.length < passwordLength) {
     randomInt = getRandomInt(criteriaArray.length);
     criteria = criteriaArray[randomInt].id;
 
+    // randomly select a criteria
     switch (criteria) {
       case 1:
         if (lowercaseCond.count < characterLimit) {
+          // Randomly generate a lowercase letter
           randomCharInt = getRandomArbitrary(97,123); // Ascii codes for lower case letters
           char = String.fromCharCode(randomCharInt);
+          // add new character to password string
           newPassword += char;
           lowercaseCond.count++;
         }
         break;
       case 2: 
         if (uppercaseCond.count < characterLimit) {
+          // Randomly generate an uppercase letter
           randomCharInt = getRandomArbitrary(65, 91); // Ascii codes for uppercase letters
           char = String.fromCharCode(randomCharInt);
+          // add new character to password string
           newPassword += char;
           uppercaseCond.count++;
         }
         break;
       case 3:
         if (numericCond.count < characterLimit) {
-          randomCharInt = getRandomInt(10);
+          // randomly generate a random number from 0 - 9
+          randomCharInt = getRandomInt(10); 
+          // add new character to password string
           newPassword += randomCharInt;
           numericCond.count++;
         }
         break;
       case 4:
         if (specialCond.count < characterLimit) {
+          // randomly generate a random special character from specialChars array
           randomCharInt = getRandomInt(specialChars.length);
+          // add new character to password string
           newPassword += specialChars[randomCharInt];
           specialCond.count++;
         }
