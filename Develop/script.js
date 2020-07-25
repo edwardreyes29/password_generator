@@ -13,8 +13,10 @@ function writePassword() {
 
 // Generate a password
 function generatePassword() {
+
   var input = ""; // user's input
   var passwordLength = 0; // Password Length
+
   do {
     // Ask user to enter password length
     input = prompt("Password length must be at least 8 characters\nand no more than 128 characters\n\nEnter the length of the password:")
@@ -24,6 +26,7 @@ function generatePassword() {
       return;
     }
     passwordLength = Number(input); // convert input into a number
+
   } while ((passwordLength < 8 || passwordLength > 128)); // if null, user clicked cancel
 
   // create objects for each criteria
@@ -31,11 +34,6 @@ function generatePassword() {
   var uppercaseCond = {name: "upper", include: false, count: 0, id: 2};
   var numericCond = {name: "numeric", include: false, count: 0, id: 3};
   var specialCond = {name: "special", include: false, count: 0, id: 4};
-  
-  // var includeLowerCase = false;  
-  // var includeUpperCase = false;
-  // var includeNumeric = false;
-  // var includeSpecial = false;
 
   do {
     // Notify the user to choose at least one criteria
@@ -52,13 +50,7 @@ function generatePassword() {
     
   } while(!(lowercaseCond.include || uppercaseCond.include || numericCond.include  || specialCond.include)); // if all are still false, loop again
 
-  // Create arrays to store characters for special characters
-  var specialChars = ['!', '\"', '#', '$', '%', '&','\'', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', ']', '\\', '^', '{', '|', '}', '~', ' '];
-  // var numbers = [1,2,3,4,5,6,7,8,8,9];
-  // var lowercase = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','']
-
-  
-
+  // Array to hold criterias that were given the value of true.
   criteriaArray = [];
   // include criteria numbers that are selected true into criteriaArray
   if (lowercaseCond.include) {
@@ -73,13 +65,12 @@ function generatePassword() {
   if (specialCond.include) {
     criteriaArray.push(specialCond);
   } 
-  console.log(criteriaArray);
-
-  // var res = String.fromCharCode(65);
-  // console.log(res);
 
   // Set a character limit for each criteria so each are guaranteed to be met in the password
   var characterLimit = Math.floor(passwordLength / criteriaArray.length);
+
+  // Create arrays to store characters for special characters
+  var specialChars = [' ', '!', '\"', '#', '$', '%', '&','\'', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', ']', '\\', '^', '{', '|', '}', '~', '_', '`'];
 
   // Generate the password based on the given criteria
   var newPassword = ""; // to store the newly generated password
@@ -95,31 +86,31 @@ function generatePassword() {
     switch (criteria) {
       case 1:
         if (lowercaseCond.count < characterLimit) {
-          randomCharInt = getRandomArbitrary(97,123);
+          randomCharInt = getRandomArbitrary(97,123); // Ascii codes for lower case letters
           char = String.fromCharCode(randomCharInt);
-          console.log(char);
           newPassword += char;
           lowercaseCond.count++;
         }
         break;
       case 2: 
         if (uppercaseCond.count < characterLimit) {
-          // console.log("case 2");
-          newPassword += 2;
+          randomCharInt = getRandomArbitrary(65, 91); // Ascii codes for uppercase letters
+          char = String.fromCharCode(randomCharInt);
+          newPassword += char;
           uppercaseCond.count++;
         }
         break;
       case 3:
         if (numericCond.count < characterLimit) {
-          // console.log("case 3");
-          newPassword += 3;
+          randomCharInt = getRandomInt(10);
+          newPassword += randomCharInt;
           numericCond.count++;
         }
         break;
       case 4:
         if (specialCond.count < characterLimit) {
-          // console.log("case 4");
-          newPassword += 4;
+          randomCharInt = getRandomInt(specialChars.length);
+          newPassword += specialChars[randomCharInt];
           specialCond.count++;
         }
         break;
@@ -140,20 +131,17 @@ function generatePassword() {
     
   } // end while
 
-  console.log(newPassword);
-  console.log(newPassword.length);
-
-  console.log("end program")
-  
-  
+  // To show new password and prove that it meets required length
+  console.log("New password: " + newPassword); 
+  console.log("Password length: " + newPassword.length);
+  return newPassword;
 
 } // end generatePassword()
 
-// include random functions
+// include random functions: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
 }
-
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
