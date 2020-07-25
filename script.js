@@ -144,7 +144,7 @@ function generatePassword() {
         j++;
       } 
       // reached end of array, if true, make all counts equal to zero
-      if ((j+1) >= criteriaArray.length) {
+      if ((j+1) > criteriaArray.length) {
         for (var k = 0; k < criteriaArray.length; k++) {
           criteriaArray[k].count = 0;
         }
