@@ -13,18 +13,14 @@ function writePassword() {
 
 // Generate a password
 function generatePassword() {
-  var selectedCriteria = Number(prompt("[1] Choose password length\n" +
-  "[2] Choose lowercase, uppercase, numeric, and/or special characters\n" +
-  "Enter [1] or [2]"));
-  console.log(selectedCriteria);
-  console.log(typeof selectedCriteria)
+  var passwordLength = 0; // Password Length
+  var input;
 
-  if (selectedCriteria === 1) {
-    console.log("selectedCriteria is a number")
-  } else if (isNaN(selectedCriteria)) {
-    console.log("selectedCriteria is not a number")
-  }
-  
+  do {
+    // Ask user to enter password length
+    input = prompt("Password length must be at least 8 characters\nand no more than 128 characters\n\nEnter the length of the password:")
+    passwordLength = Number(input);
+  } while ((passwordLength < 8 || passwordLength > 128) && input !== null); // if null, user pressed cancel
 }
 
 // Add event listener to generate button
