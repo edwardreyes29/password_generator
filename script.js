@@ -68,12 +68,12 @@ function generatePassword() {
   
   /*
     Set a character limit for each criteria so each are guaranteed to be met in the new password string.
-    For example, if password length is set to 9 and 3/4 criteria's were selected.
-    Then the character limit for each character will be = 9/3 = 3. Which means that characters in a each criteria can appear
+    For example, if password length is set to 9 and 3/4 criteria's were selected,
+    then the character limit for each character will be = 9/3 = 3. Which means that characters in a each criteria can appear
     in the password at most 3 times. 
 
     This becomes tricky when the password length isn't perfectly divisible by the number of selected criterias.
-    Let's assume that the password length is 9 and 4/4 criterias were selected. Then the
+    Let's assume that the password length is 9 and 4/4 criterias were selected, then the
     character limit for each criteria will be 9/4 = 2. But that would mean that only 8 slots will be filled out of 9,
     because each the number of characters for each criteria can be at most 2. (2+2+2+2 = 8)
 
