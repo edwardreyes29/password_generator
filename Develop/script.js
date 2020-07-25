@@ -83,18 +83,22 @@ function generatePassword() {
 
   // Generate the password based on the given criteria
   var newPassword = ""; // to store the newly generated password
+  var randomInt;
+  var randomCharInt;
+  var criteria;
+  var char; // To store lowercase or uppercase generated letter
   
   while (newPassword.length < passwordLength) {
-    var randomInt = getRandomInt(criteriaArray.length);
+    randomInt = getRandomInt(criteriaArray.length);
+    criteria = criteriaArray[randomInt].id;
 
-    var criteria = criteriaArray[randomInt].id;
-    console.log(criteria);
-    console.log("generating...");
     switch (criteria) {
       case 1:
         if (lowercaseCond.count < characterLimit) {
-          // console.log("case 1");
-          newPassword += 1;
+          randomCharInt = getRandomArbitrary(97,123);
+          char = String.fromCharCode(randomCharInt);
+          console.log(char);
+          newPassword += char;
           lowercaseCond.count++;
         }
         break;
@@ -122,21 +126,16 @@ function generatePassword() {
     } // end switch
 
     // if all character limits are reached, reset all to zero
-    for (var i = 0; i < criteriaArray.length; i++) {
-      console.log("criteria met")
-    }
-
-
-
-    if (lowercaseCount === uppercaseCount && uppercaseCount === numericCount && numericCount === specialCount) {
-      // console.log("lower limit: " + lowercaseCount);
-      // console.log("upper limit: " + uppercaseCount);
-      // console.log("numeric limit: " + numericCount);
-      // console.log("special limit: " + specialCount);
-      lowercaseCount = 0;
-      uppercaseCount = 0;
-      numericCount = 0;
-      specialCount = 0;
+    for (var i = 0, j = 0; i < criteriaArray.length; i++) {
+      if (criteriaArray[i].count >= characterLimit) {
+        j++;
+      } 
+      // reached end of array, if true, make all counts equal to zero
+      if ((j+1) >= criteriaArray.length) {
+        for (var k = 0; k < criteriaArray.length; k++) {
+          criteriaArray[k].count = 0;
+        }
+      }
     }
     
   } // end while
