@@ -145,10 +145,12 @@ function generatePassword() {
     // if all character limits are reached, reset all to zero
     for (var i = 0, j = 0; i < criteriaArray.length; i++) {
       if (criteriaArray[i].count >= characterLimit) {
+        // j represents all the criterias that have reached the character limit
         j++;
       } 
-      // reached end of array, if true, make all counts equal to zero
-      if ((j+1) > criteriaArray.length) {
+      // If the number of criteria's that have maxed character limit is the same as
+      // the number of elements in the criteriaArray, reset all counts to 0.
+      if (j === criteriaArray.length){
         for (var k = 0; k < criteriaArray.length; k++) {
           criteriaArray[k].count = 0;
         }
