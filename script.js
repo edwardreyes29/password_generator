@@ -65,19 +65,23 @@ function generatePassword() {
     criteriaArray.push(specialCond);
   } 
 
-  // Set a character limit for each criteria so each are guaranteed to be met in the password
+  
   /*
-    For example, if password length is set to 9, and 3 out of 4 criterias were selected,
-    then criteriaLimit = 9/3 = 3. Which means that characters in a each criteria can appear
-    in the password at least 3 times. 
+    Set a character limit for each criteria so each are guaranteed to be met in the new password string.
+    For example, if password length is set to 9 and 3/4 criteria's were selected.
+    Then the character limit for each character will be = 9/3 = 3. Which means that characters in a each criteria can appear
+    in the password at most 3 times. 
 
     This becomes tricky when the password length isn't perfectly divisible by the number of selected criterias.
-    For example, if the password length is 9 and 4 out 4 criterias were selected, then the
-    criteriaLimit will be 2. However, that would mean that if the criteria limit is set when generating 
-    a password, only 8 slots will be filled out of 9. To counter this, I made a condition where if all
-    the counts in each criteria object (that are stored inside the criteriaArray) are all maxed out, then
-    the program will reset all the counts to 0. This will allow any character randomly selected to continue generate 
-    until the password length is met.
+    Let's assume that the password length is 9 and 4/4 criterias were selected. Then the
+    character limit for each criteria will be 9/4 = 2. But that would mean that only 8 slots will be filled out of 9,
+    because each the number of characters for each criteria can be at most 2. (2+2+2+2 = 8)
+
+    The solution to this problem is a condition where if all the counts in each criteria object 
+    (that are stored inside the criteriaArray) are all equal to or greater than the character limit will
+    reset all the counts in each criteria object to 0. So now the program can continue randomly selecting new
+    characters to add to the pass word. In the second example above, the last character can be from any one
+    of the criteria's whose character limit have all ben rest to 0.
   
   */
   var characterLimit = Math.floor(passwordLength / criteriaArray.length);
